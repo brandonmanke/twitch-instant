@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <!-- IE SUPPORT -->
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="shortcut icon" href="images/fav.png">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src= "http://player.twitch.tv/js/embed/v1.js"></script>
+    <title>Twitch Instant</title>
+  </head>
+  <body>
+    <div class="jumbotron main">
+      <div class=" container">
+        <h1>Twitch Instant</h1>
+        <div class="input-group input-group-md search-bar">
+          <input type="text" class="form-control" id="search" placeholder="Search for a channel">
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="embedded">
+        <div class="stream">
+          <div id="stream-iframe"></div>
+        </div>
+        <div class="chat">
+          <iframe
+            id="chat-iframe"
+            frameborder="0"
+            scrolling="no"
+            src="http://www.twitch.tv/{CHANNEL}/chat"
+            height="480"
+            width="300">
+          </iframe>
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="t-chat" type="button" class="btn btn-info">Toggle Chat</button>
+      </div>
+    </div>
+
+    <div class="recommended">
+      <button id="t-rec" type="button" class="btn"><span class="glyphicon glyphicon-chevron-up"></span></button>
+      <nav class="navbar navbar-inverse navbar-fixed-to-bottom">
+        <div class="container">
+          <h4 class="nav-header">Related Channels:</h4>
+          <!-- TODO: Add flexbox divs for recommended channels, pull channel thumbnail 4from api, display etc. also hide and show transitions-->
+          <div id="#nav-objects" class="flexbox">
+            <a class="v v1"></a>
+            <a class="v v2"></a>
+            <a class="v v3"></a>
+            <a class="v v4"></a>
+            <a class="v v5"></a>
+            <a class="v v6"></a>
+          </div>
+        </div>
+      </nav>
+      </nav>
+    </div>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
+    <script src="js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+/* TODO:
+*  FIX LATER: at certain lengths the h1 and search bar aren't aligned properly,
+*  mainly happens around the 500-400px area. Might just use col system but not 100% sure yet.
+*
+*  ..
+*/
+
+.main {
+  background: #6441a5;;
+  background-image: linear-gradient(#7152A0 0, #6441a5 100%);
+  padding-top: 0px;
+}
+
+.container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 1px 1px black;
+}
+
+.search-bar {
+  margin: 0 auto;
+  width: 500px;
+}
+
+@media (max-width: 500px) {
+  .search-bar {
+    width: 400px;
+  }
+}
+
+.embedded {
+  width: 1154px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stream {
+  height: 480px;
+  width: 850px;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.chat {
+    display: inline-block;
+}
+
+.buttons {
+  width: 1154px;
+  text-align: right;
+  margin: 0 auto;
+}
+
+#t-chat {
+  background-color: #6441a5;
+  border-color: #6441a5;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+#t-chat:hover {
+  background-color: #5628ac;
+}
+
+#t-chat:active{
+  background-color: #5628ac;
+}
+
+.recommended nav {
+  border-radius: 0px;
+  margin-bottom: 0px;
+}
+
+.nav-header {
+  color: #fff;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.flexbox {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  text-align: center;
+}
+
+.flexbox a {
+  width: 280px;
+  height: 140px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-position: center;
+  background-size: cover;
+}
