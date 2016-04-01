@@ -15,7 +15,7 @@ function newPlayer (query) {
     channel: query,
     //video: "{VIDEO_ID}" **Can find vods this way**
   }
-  var player = new Twitch.Player("stream-iframe", options)
+  var player = new Twitch.Player("stream-iframe", options);
   player.setVolume(0.5);
   player.setQuality('high');
 }
@@ -45,8 +45,9 @@ function ajaxStream () {
         }
 
         $('.v').on('click', function () {
-          newPlayer($(this).text()); // gets query from this.v element text to create new iframe
-          $('#chat-iframe').attr('src', 'https://www.twitch.tv/' + $(this).text() + '/chat'); // updates chat iframe
+          //newPlayer($(this).text()); // gets query from this.v element text to create new iframe
+          query = $(this).text();
+          //$('#chat-iframe').attr('src', 'https://www.twitch.tv/' + $(this).text() + '/chat'); // updates chat iframe
         });
       } else {
         // no channels are live so look for vods in new ajax request
@@ -108,5 +109,3 @@ $('#search').keyup(function (e) {
 $('#t-chat').click(function toggleChat () {
   $('#chat-iframe').toggle();
 });
-
-console.log('\n')
