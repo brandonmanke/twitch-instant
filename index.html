@@ -14,6 +14,12 @@
   </head>
   <body>
     <div class="jumbotron main">
+      <nav class="navbar navbar-nav">
+        <div class="buttons">
+          <span id="t-chat" class="glyphicon glyphicon-cog"></span>
+          <!--<button id="t-chat" type="button" class="btn btn-secondary"><span class="glyphicon glyphicon-cog"></span></button>-->
+        </div>
+      </nav>
       <div class=" container">
         <h1>Twitch Instant</h1>
         <div class="input-group input-group-md search-bar">
@@ -37,25 +43,14 @@
           </iframe>
         </div>
       </div>
-      <div class="buttons">
-        <button id="t-chat" type="button" class="btn btn-info">Toggle Chat</button>
-      </div>
     </div>
-
     <div class="recommended">
       <button id="t-rec" type="button" class="btn"><span class="glyphicon glyphicon-chevron-up"></span></button>
       <nav class="navbar navbar-inverse navbar-fixed-to-bottom">
         <div class="container">
           <h4 class="nav-header">Related Channels:</h4>
-          <!-- TODO: Add flexbox divs for recommended channels, pull channel thumbnail 4from api, display etc. also hide and show transitions-->
-          <div id="#nav-objects" class="flexbox">
-            <a class="v v1"></a>
-            <!--<a class="v v2"></a>
-            <a class="v v3"></a>
-            <a class="v v4"></a>
-            <a class="v v5"></a>
-            <a class="v v6"></a>-->
-          </div>
+          <!-- TODO: hide and show transitions-->
+          <div id="nav-objects" class="flexbox"></div>
         </div>
       </nav>
       </nav>

@@ -1,42 +1,6 @@
 // Created by Brandon Manke
-
-var SEARCH = (function () {
-  // private
-  var query = function (value) {
-    query = value;
-  }
-
-  function setQuery () {
-    return query;
-  }
-
-  var setQuery = function (text) {
-    query(text);
-  }
-
-  // public
-  return {
-    get: getQuery(),
-    set: setQuery()
-  }
-})();
-
-var STREAM = (function () {
-    var timeout;
-
-    function getTimeout () {
-      return timeout;
-    }
-
-    function setTimeout (value) {
-      timeout = value;
-    }
-
-    return {
-      get: getTimeout(),
-      set: setTimeout()
-    }
-})();
+var timeout;
+var query;
 
 /**
 *  @param {string} query - search value for channel/vod
@@ -52,11 +16,8 @@ function newPlayer (query) {
     //video: "{VIDEO_ID}" **Can find vods this way**
   }
   var player = new Twitch.Player("stream-iframe", options);
-<<<<<<< HEAD
-  player.setVolume(0.5);
-  player.setQuality('high');
-=======
->>>>>>> gh-pages
+  //player.setVolume(volume);
+  //player.setQuality('high');
 }
 
 // ajax request function for searching streams
@@ -79,27 +40,23 @@ function ajaxStream () {
         // pulls each stream preview after first stream for recommended navbar
         for (var i = 1; i < Object.keys(data.streams).length; i++) {
           // adds background url for medium sized image 320x{something}
-          $('.v').append($('#nav-objects a.v'));
-          //$('.v' + i).css('background', 'url(\'' + data.streams[i].preview.medium + '\')');
-          //$('.v' + i).text(data.streams[i].channel.display_name); // set hover text
+          $('#nav-objects').append('<a class="v v' + i + '"></a>');
+          console.log('\n LOGGED \n');
+          $('.v' + i).css('background', 'url(\'' + data.streams[i].preview.medium + '\')');
+          $('.v' + i).text(data.streams[i].channel.display_name); // set hover text
         }
 
+        // Reccommended update
         $('.v').on('click', function () {
-<<<<<<< HEAD
           //newPlayer($(this).text()); // gets query from this.v element text to create new iframe
           query = $(this).text();
-          //$('#chat-iframe').attr('src', 'https://www.twitch.tv/' + $(this).text() + '/chat'); // updates chat iframe
-=======
-          STREAM.setQuery({}) = newPlayer($(this).text()); // gets query from this.v element text to create new iframe
+          query = newPlayer($(this).text()); // gets query from this.v element text to create new iframe
           $('#chat-iframe').attr('src', 'https://www.twitch.tv/' + $(this).text() + '/chat'); // updates chat iframe
-          // not sure if this will infinite loop yet try it yolo
->>>>>>> gh-pages
         });
       } else {
         // no channels are live so look for vods in new ajax request
         ajaxVOD();
       }
-      volume = player.getVolume();
     }
   });
 }
@@ -156,8 +113,3 @@ $('#search').keyup(function (e) {
 $('#t-chat').click(function toggleChat () {
   $('#chat-iframe').toggle();
 });
-<<<<<<< HEAD
-=======
-
-console.log('\n');
->>>>>>> gh-pages

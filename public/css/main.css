@@ -47,18 +47,19 @@
 }
 
 .buttons {
-  width: 1154px;
   text-align: right;
   margin: 0 auto;
 }
 
 #t-chat {
-  background-color: #6441a5;
-  border-color: #6441a5;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
   margin: 0 auto;
   display: inline-block;
 }
 
+/*
 #t-chat:hover {
   background-color: #5628ac;
 }
@@ -66,6 +67,7 @@
 #t-chat:active{
   background-color: #5628ac;
 }
+*/
 
 .recommended nav {
   border-radius: 0px;
@@ -85,8 +87,8 @@
   text-align: center;
 }
 
-.flexbox a {
-  width: 280px;
+#nav-objects a {
+  width: 240px;
   height: 140px;
   margin-bottom: 20px;
   margin-left: 10px;
