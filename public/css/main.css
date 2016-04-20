@@ -85,6 +85,7 @@
   justify-content: space-around;
   flex-direction: row;
   text-align: center;
+  overflow-x: auto;
 }
 
 #nav-objects a {
