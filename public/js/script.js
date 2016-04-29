@@ -119,10 +119,20 @@ $('#search').keyup(function (e) {
   timeout = setTimeout(function () {
     ajaxStream();
   }, 500);
-
-  clearRecommended();
+  clearRecommended(); // this might not work all the time depending on when ajaxStream ends, might need to change this
 });
 
 $('#t-chat').click(function toggleChat () {
   $('#chat-iframe').toggle();
 });
+
+$(document).ready(function() {
+		$menuLeft = $('.pushmenu-left');
+		$menu = $('.menu');
+
+		$menu.click(function() {
+			$(this).toggleClass('active');
+			$('.push-nav-push').toggleClass('push-nav-push-to-right');
+			$menuLeft.toggleClass('push-open');
+		});
+	});

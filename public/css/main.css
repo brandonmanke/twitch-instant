@@ -2,7 +2,8 @@
 *  FIX LATER: at certain lengths the h1 and search bar aren't aligned properly,
 *  mainly happens around the 500-400px area. Might just use col system but not 100% sure yet.
 *
-*  ..
+*  transition: http://jsfiddle.net/jm36a13s/
+*
 */
 
 .main {
@@ -19,12 +20,82 @@
 }
 
 /* ==============* MENU CSS ==============*/
+.pushmenu { /*this is the nav*/
+  background: #3c3933;
+  font-family: Arial, Helvetics, sans-serif;
+  width: 240px;
+  height: 100%;
+  top: 0;
+  z-index: 1000;
+  position:fixed;
+}
 
+.pushmenu h3 {
+  color: #cbbfad;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 15px 20px;
+  margin: 0;
+  background: #282522;
+  height: 16px;
+}
+
+.pushmenu a {
+  display: block; /* drops the nav vertically*/
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  border-top: 1px solid #56544e;
+  border-bottom: 1px solid #312e2a;
+  padding: 14px;
+}
+
+.pushmenu a:hover {
+  background:#00A287;
+}
+
+.pushmenu a:active {
+  background: #454f5c;
+  color: #fff;
+}
+
+.pushmenu-left {
+  left: -240px;
+
+}
+
+.pushmenu-left.pushmenu-open {
+  left: 0;
+}
+
+.pushmenu-push {
+  overflow-x: hidden;
+  position: relative;
+  left: 0;
+}
+
+.pushmenu-push-toright {
+  left: 240px;
+}
+
+/*Transition*/
+.pushmenu, .pushmenu-push {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+/*
 .menu {
   position: absolute;
   width: 50px;
   height: 45px;
   padding: 10px;
+}
+
+.menu.active {
+  background-position: -33px top;
 }
 
 .bar {
@@ -35,7 +106,47 @@
   border-radius: 10px;
 }
 
-/* ===========* SEARCH BAR CSS ===========*/
+.push-nav {
+  width: 240px;
+  height: 100%;
+  top: 0;
+  z-index: 1000;
+  position: fixed;
+}
+
+.push-nav a {
+  display: block;
+  fontsize: 14px;
+  padding: 10px;
+}
+
+.push-left {
+  left: -240px;
+}
+
+.push-left.push-open { /* pushes menu open */
+  left: 0;
+}
+
+.push-nav-push-to-right {
+  left: 240px;
+}
+
+.push-nav-push {
+  overflow-x: hidden;
+  position: relative;
+  left: 0;
+}
+
+/* ======== PUSH NAV TRANSITIONS ========= */
+
+.push-nav, .push-nav-push {
+  -moz-transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+*/
+/* ===========* SEARCH BAR CSS =========== */
 
 .search-bar {
   margin: 0 auto;
