@@ -1,0 +1,180 @@
+/* TODO:
+*  FIX LATER: at certain lengths the h1 and search bar aren't aligned properly,
+*  mainly happens around the 500-400px area. Might just use col system but not 100% sure yet.
+*
+*  Push transitions for menu
+*
+*/
+
+body {
+  margin: 0;
+  transition: all .4s ease;
+}
+
+/* body push animation */
+body.push {
+  margin-left: 20%;
+  margin-right: -20%;
+  overflow-x: hidden;
+  transition: all .4s ease;
+}
+
+.main {
+  background: #6441a5;
+  background-image: linear-gradient(#7152A0 0, #6441a5 100%);
+  padding-top: 0px;
+}
+
+.container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 1px 1px black;
+}
+
+/*==============* MENU CSS ==============*/
+
+.menu {
+  position: absolute;
+  width: 50px;
+  height: 45px;
+  padding: 10px;
+}
+
+.bar {
+  width: 35px;
+  height: 4px;
+  margin-bottom: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  -webkit-transition: all .4s ease; /* chrome & safari */
+  transition: all .4s ease;
+  -webkit-transform: translateY(0px) rotate(0deg); /* chrome & safari */
+  transform: translateY(0px) rotate(0deg);
+
+}
+
+/*============= Menu Animation CSS ===============*/
+
+#b1.x {
+  -webkit-transform: translateY(9px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
+}
+
+#b2.x {
+  opacity: 0;
+}
+
+#b3.x {
+  -webkit-transform: translateY(9px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/*================= Menu CSS END =================*/
+
+/*============= Push Menu Animation CSS ===============*/
+
+.push-menu {
+  margin-left: -20%;
+  background-color: #17141F;
+  position: fixed;
+  overflow: hidden;
+  min-height: 100vh;
+  width: 20%;
+  transition: all .4s ease;
+}
+
+.push-menu a {
+  color: #faf9fa;
+  margin: 5px;
+  padding: 20px;
+  display: block;
+  transition: all .4s ease;
+}
+
+.push-menu a:hover {
+  text-decoration: none;
+  background-color: #201C2B;
+  transition: all .4s ease;
+}
+
+/*============== Push Menu CSS END =================*/
+
+/*============== SEARCH BAR CSS =============*/
+
+.search-bar {
+  margin: 0 auto;
+  width: 500px;
+}
+
+@media (max-width: 500px) {
+  .search-bar {
+    width: 400px;
+  }
+}
+
+/* ========* TWITCH EMBEDDED CSS ========*/
+
+.embedded {
+  width: 1154px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stream {
+  height: 480px;
+  width: 850px;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.chat {
+    display: inline-block;
+}
+
+/* ============* RECOMMENDED NAVBAR CSS ===========*/
+
+.recommended {
+  overflow: hidden;
+}
+
+.recommended nav {
+  transition: all 2s ease;
+  border-radius: 0px;
+  margin-bottom: 0px;
+}
+
+#recommended-nav {
+  background-color: #17141F;
+  height: 100%;
+  bottom: 0px;
+}
+
+#recommended-nav.toggle {
+  height: 0px;
+  bottom: -230px;
+}
+
+.nav-header {
+  color: #fff;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+#nav-objects {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  text-align: center;
+  overflow-x: auto;
+}
+
+#nav-objects a {
+  min-width: 240px;
+  height: 140px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-position: center;
+  background-size: cover;
+}
