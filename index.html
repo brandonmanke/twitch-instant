@@ -13,7 +13,17 @@
     <title>Twitch Instant</title>
   </head>
   <body>
+    <nav class="push-menu">
+      <a href="#">fill</a>
+      <a href="#">fill</a>
+      <a href="#" id="t-chat">Toggle Chat</a>
+    </nav>
     <div class="jumbotron main">
+      <div class="menu">
+        <div class="bar" id="b1"></div>
+        <div class="bar" id="b2"></div>
+        <div class="bar" id="b3"></div>
+      </div>
       <div class=" container">
         <h1>Twitch Instant</h1>
         <div class="input-group input-group-md search-bar">
@@ -37,30 +47,18 @@
           </iframe>
         </div>
       </div>
-      <div class="buttons">
-        <button id="t-chat" type="button" class="btn btn-info">Toggle Chat</button>
-      </div>
     </div>
-
     <div class="recommended">
       <button id="t-rec" type="button" class="btn"><span class="glyphicon glyphicon-chevron-up"></span></button>
-      <nav class="navbar navbar-inverse navbar-fixed-to-bottom">
+      <nav id="recommended-nav" class="navbar navbar-inverse navbar-fixed-to-bottom">
         <div class="container">
           <h4 class="nav-header">Related Channels:</h4>
-          <!-- TODO: Add flexbox divs for recommended channels, pull channel thumbnail 4from api, display etc. also hide and show transitions-->
-          <div id="#nav-objects" class="flexbox">
-            <a class="v v1"></a>
-            <a class="v v2"></a>
-            <a class="v v3"></a>
-            <a class="v v4"></a>
-            <a class="v v5"></a>
-            <a class="v v6"></a>
-          </div>
+          <!-- TODO: hide and show transitions-->
+          <div id="nav-objects" class="flexbox"></div>
         </div>
       </nav>
       </nav>
     </div>
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
-    <script src="js/script.js"></script>
+    <script src="js/instant.js"></script>
   </body>
 </html>
