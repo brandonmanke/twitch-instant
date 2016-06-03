@@ -1,9 +1,6 @@
 /* TODO:
-*  FIX LATER: at certain lengths the h1 and search bar aren't aligned properly,
-*  mainly happens around the 500-400px area. Might just use col system but not 100% sure yet.
-*
-*  Push transitions for menu
-*
+* Change how related channels shows and hides itself and the button position.
+* Change push menu width at smaller resolutions?
 */
 
 body {
@@ -158,6 +155,10 @@ body.push {
     width: 750px;
     height: 430px;
   }
+
+  .recommended {
+    position: relative;
+  }
 }
 
 @media (max-width: 750px) {
@@ -185,7 +186,9 @@ body.push {
 /* ============* RECOMMENDED NAVBAR CSS ===========*/
 
 .recommended {
-  overflow: hidden;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }
 
 .recommended nav {
@@ -196,8 +199,9 @@ body.push {
 
 #recommended-nav {
   background-color: #17141F;
-  height: 100%;
+  width: 100%;
   bottom: 0px;
+  /*transition: all .4s ease;*/
 }
 
 #recommended-nav.toggle {
