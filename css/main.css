@@ -191,6 +191,11 @@ body.push {
   bottom: 0;
 }
 
+/* this fixes a spacing issue at lower resolutions when chat iframe is toggled off */
+.recommended.fixed {
+  position: fixed !important;
+}
+
 .recommended nav {
   transition: all 2s ease;
   border-radius: 0px;
