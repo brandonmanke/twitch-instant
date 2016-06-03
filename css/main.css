@@ -132,6 +132,56 @@ body.push {
     display: inline-block;
 }
 
+/* ============* IFRAME MEDIA QUERIES CSS ===========*/
+
+@media (max-width: 1199px) {
+  .embedded {
+    width: auto;
+  }
+
+  .chat {
+    height: inherit;
+    width: inherit;
+    display: inherit;
+  }
+
+  .stream {
+    height: inherit;
+    width: inherit;
+  }
+
+  #chat-iframe {
+    width: 750px;
+  }
+
+  #stream-iframe iframe {
+    width: 750px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 750px) {
+  #chat-iframe {
+    width: 600px;
+  }
+
+  #stream-iframe iframe {
+    width: 600px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 630px) {
+  #chat-iframe {
+    width: 480px;
+  }
+
+  #stream-iframe iframe {
+    width: 480px;
+    height: 260px;
+  }
+}
+
 /* ============* RECOMMENDED NAVBAR CSS ===========*/
 
 .recommended {

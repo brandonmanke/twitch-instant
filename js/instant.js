@@ -6,14 +6,15 @@
 * @version 1.0.0 ?
 *
 * @TODO:
-* Possibly fix the recommended channel list from coming up blank
-* once a recommended channel is clicked in featuredStreams()
-* or if there are no other recommended channels (i.e. query is too specific)
-* only thing I can think of right now is display a (no more online streams found)
-*
-* Also finish VOD function and logic
-*
+* Finish VOD function and logic, if it is even possible
 * Make popout menu prettier
+*
+* For vod search
+* probably just going to have to check boxes or something for vods or stream searches
+*
+* Have to find a way to search for the first channel that starts with a letter "a" since channel a
+* doesn't exist/have vods, and if that channel has vods then display all of it's vods. This will be
+* kind of tough to implement but I think I can get it done
 */
 
 // global variable timeout
@@ -44,7 +45,7 @@ function newPlayer (query) {
 * @description Searches the twitch api with a GET request based on the query.
 * If there is at least one stream it creates a new vod and chat iframe with the
 * first stream object in {object} data. Then updates the recommended-nav
-* according to the new query
+* according to the new querytw
 */
 function searchStreams (query) {
   $.ajax({
@@ -62,10 +63,9 @@ function searchStreams (query) {
         // update chat iframe with first channel
         $('#chat-iframe').attr('src', data.streams[0].channel.url + '/chat');
 
-        // Removes old recommended elements once new query is searched
-        $('.v').remove();
-        recommendedUpdate(data);
-        recClick();
+        // checks if there is at least 1 related channel
+        // otherwise it does not update the recommended list
+        hasRelatedChannels(data);
       } else {
         // no channels are live so look for vods in new ajax request
         // STILL WORK TO BE DONE HERE
@@ -77,17 +77,17 @@ function searchStreams (query) {
 
 // ajax request for searching vods
 // TODO: decide how to use vod system because other channels could be live maybe first 10? idk
-// probably just gonna have check boxes or something for vods or stream searches
-function searchVODs (id) {
+// 'https://api.twitch.tv/kraken/channels/' + channel could possible work initially, then once
+// channel is found pull VOD information
+function searchVODs (channel) {
   $.ajax({
-    url: id,
+    url: 'https://api.twitch.tv/kraken/channels/' + channel + '/videos?limit=10', // might remove the limit
     method: 'GET',
     data: {},
     success: function (data) {
       if (data._total > 0) {
-        console.log('SUCCESS!' + vodURL);
+        console.log('SUCCESS!');
         console.table(data);
-        setVideo(v68573232);
       }
     }
   });
@@ -186,6 +186,13 @@ function recommendedUpdate (data) {
 
 // Recommended update @TODO: Make this comment descriptive
 // On element click it will update the stream and chat with that stream
+/**
+* @name recClick
+* @description On specified recommeneded channel element click
+* pull the channel name and create a new player and chat iframe from specified channel.
+* Remove the element, then update the list of recommended channels by searching
+* the api for related channels to clicked channel.
+*/
 function recClick () {
   $('.v').click(function () {
     var channel = $(this).text().toLowerCase();
@@ -194,6 +201,23 @@ function recClick () {
     $(this).remove();
     searchStreams(channel);
   });
+}
+
+/**
+* @name hasRelatedChannels
+* @param {object} data - data object from twitch api call
+* @description checks if there is at least one related channel,
+* otherwise it does not update the recommended list.
+* This fixes the problem with the recommended nav not displaying any channels
+*/
+function hasRelatedChannels (data) {
+  // if there is at least 1 related channel
+  if (data._total != 1 ) {
+    // Removes old recommended elements once new query is searched
+    $('.v').remove();
+    recommendedUpdate(data);
+    recClick();
+  }
 }
 
 /**
