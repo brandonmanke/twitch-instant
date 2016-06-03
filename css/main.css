@@ -157,7 +157,7 @@ body.push {
   }
 
   .recommended {
-    position: relative;
+    position: relative !important;
   }
 }
 
