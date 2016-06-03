@@ -227,6 +227,7 @@ function hasRelatedChannels (data) {
 */
 $('#t-chat').click(function toggleChat () {
   $('#chat-iframe').toggle();
+  $('.recommended').toggleClass('fixed');
 });
 
 // menu animation toggle

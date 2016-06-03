@@ -157,7 +157,7 @@ body.push {
   }
 
   .recommended {
-    position: relative;
+    position: relative !important;
   }
 }
 
@@ -189,6 +189,11 @@ body.push {
   width: 100%;
   position: fixed;
   bottom: 0;
+}
+
+/* this fixes a spacing issue at lower resolutions when chat iframe is toggled off */
+.recommended.fixed {
+  position: fixed !important;
 }
 
 .recommended nav {
