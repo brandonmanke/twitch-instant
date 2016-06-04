@@ -1,31 +1,28 @@
 /**
-* @author Brandon Manke
-* @date 5/27/16
-* @file instant.js
-* @license MIT License - https://opensource.org/licenses/MIT
-* @version 1.0.0 ?
-*
-* @TODO:
-* Finish VOD function and logic, if it is even possible
-* Make popout menu prettier
-*
-* For vod search
-* probably just going to have to check boxes or something for vods or stream searches
-*
-* Have to find a way to search for the first channel that starts with a letter "a" since channel a
-* doesn't exist/have vods, and if that channel has vods then display all of it's vods. This will be
-* kind of tough to implement but I think I can get it done
-*/
+ * @author Brandon Manke
+ * @date 5/27/16
+ * @file instant.js
+ * @license MIT License - https://opensource.org/licenses/MIT
+ * @version 1.0.0 ?
+ *
+ * @TODO:
+ * For vod search
+ * probably just going to have to check boxes or something for vods or stream searches
+ *
+ * Have to find a way to search for the first channel that starts with a letter "a" since channel a
+ * doesn't exist/have vods, and if that channel has vods then display all of it's vods. This will be
+ * kind of tough to implement but I think I can get it done
+ */
 
 // global variable timeout
 var timeout;
 
 /**
-* @name newPlayer
-* @param {string} query - search value for channel/vod
-* @description creates new iframe object for the channel query
-* player created uses ID #stream-iframe
-*/
+ * @name newPlayer
+ * @param {string} query - search value for channel/vod
+ * @description creates new iframe object for the channel query
+ * player created uses ID #stream-iframe
+ */
 function newPlayer (query) {
   // clear element
   $('#stream-iframe').html('');
@@ -40,13 +37,13 @@ function newPlayer (query) {
 }
 
 /**
-* @name searchStreams
-* @param {string} query - search value for channel/vod
-* @description Searches the twitch api with a GET request based on the query.
-* If there is at least one stream it creates a new vod and chat iframe with the
-* first stream object in {object} data. Then updates the recommended-nav
-* according to the new querytw
-*/
+ * @name searchStreams
+ * @param {string} query - search value for channel/vod
+ * @description Searches the twitch api with a GET request based on the query.
+ * If there is at least one stream it creates a new vod and chat iframe with the
+ * first stream object in {object} data. Then updates the recommended-nav
+ * according to the new querytw
+ */
 function searchStreams (query) {
   $.ajax({
     url: 'https://api.twitch.tv/kraken/search/streams?q=' + query,
@@ -98,14 +95,14 @@ function searchVODs (channel) {
 }
 
 /**
-* @name updateRecommendedStreams
-* @param {string} query - search value for channel
-* @description This function updates the recommended channels based
-* on the query that is passed to it. This is nice if there are no related channels
-* for a specific channel then the recommended channels can be updated.
-* Another case when this function is called is when someone clicks on a recommended
-* channel and I need to update only the recommended channels and nothing else.
-*/
+ * @name updateRecommendedStreams
+ * @param {string} query - search value for channel
+ * @description This function updates the recommended channels based
+ * on the query that is passed to it. This is nice if there are no related channels
+ * for a specific channel then the recommended channels can be updated.
+ * Another case when this function is called is when someone clicks on a recommended
+ * channel and I need to update only the recommended channels and nothing else.
+ */
 function updateRecommendedStreams (query) {
   $.ajax({
     url: 'https://api.twitch.tv/kraken/search/streams?q=' + query,
@@ -113,6 +110,7 @@ function updateRecommendedStreams (query) {
     data: {},
     success: function (data) {
       if (data._total > 0) {
+        $('.v').remove(); // removes all current recom channels before updating
         recommendedUpdate(data);
       }
     }
@@ -120,10 +118,10 @@ function updateRecommendedStreams (query) {
 }
 
 /**
-* @name - featuredStreams
-* @description displays random channel from featured channel list and populates
-* recommended nav with other featured channels.
-*/
+ * @name - featuredStreams
+ * @description displays random channel from featured channel list and populates
+ * recommended nav with other featured channels.
+ */
 function featuredStreams () {
   $.ajax({
     url: 'https://api.twitch.tv/kraken/streams/featured',
@@ -144,17 +142,21 @@ function featuredStreams () {
           $('.v' + i).text(data.featured[i].stream.channel.display_name); // set hover text
         }
       }
+
+      centerRec();
       recClick();
     }
   });
 }
 
 /**
-* @param {object} e - event parameter that is triggered after keyup() function - stores key pressed
-* @description This function is triggered everytime a key is pressed in the search bar
-* unless it is filtered out ( i.e. query is empty or undefined OR command keys are pressed
-* like ctrl, alt, shift, etc. )
-*/
+ * @name keyup
+ * @param {function} anonymous function
+ * @param {object} e - event parameter that is triggered after keyup() function - stores key pressed
+ * @description This function is triggered everytime a key is pressed in the search bar
+ * unless it is filtered out ( i.e. query is empty or undefined OR command keys are pressed
+ * like ctrl, alt, shift, etc. )
+ */
 $('#search').keyup(function (e) {
   e.preventDefault();
   var query = $('#search').val();
@@ -196,15 +198,15 @@ $('#t-rec').click(function () {
 });
 
 /**
-* @name hasRelatedChannels
-* @param {object} data - data object from twitch api call
-         {string} query - text searched by the user
-* @description checks if there is at least one related channel,
-* otherwise it does not update the recommended list.
-* This fixes the problem with the recommended nav not displaying any channels
-* However, if there is one channel it will attempt to update the related channels
-* with the same query but all of the numbers removed. (this is the regex: "/[^a-zA-Z]+/g")
-*/
+ * @name hasRelatedChannels
+ * @param {object} data - data object from twitch api call
+ * @param {string} query - text searched by the user
+ * @description checks if there is at least one related channel,
+ * otherwise it does not update the recommended list.
+ * This fixes the problem with the recommended nav not displaying any channels
+ * However, if there is one channel it will attempt to update the related channels
+ * with the same query but all of the numbers removed. (this is the regex: "/[^a-zA-Z]+/g")
+ */
 function hasRelatedChannels (data, query) {
   // if there is at least 1 related channel (i.e 2 channels)
   if (data._total > 1) {
@@ -216,21 +218,18 @@ function hasRelatedChannels (data, query) {
     newPlayer(query);
     $('#chat-iframe').attr('src', 'https://www.twitch.tv/' + query + '/chat');
     updateRecommendedStreams(query.replace(/[^a-zA-Z]+/g, ''));
+    recClick();
   }
 
-  // if there are 7 or less (8 if you include the first channel) related channels
-  // then they are centered in the flexbox (this looks much nicer).
-  if ($('#nav-objects').children().length <= 8) {
-    $('#nav-objects').css('justify-content', 'center');
-  }
+  centerRec();
 }
 
 /**
-* @name recommendedUpdate
-* @param {object} data - data parameter that takes the data pulled from the twitch api
-* @description This function updates the recommended navbar list with unique elements for each channel.
-* Each element has a preview image that is tied to specified stream.
-*/
+ * @name recommendedUpdate
+ * @param {object} data - data parameter that takes the data pulled from the twitch api
+ * @description This function updates the recommended navbar list with unique elements for each channel.
+ * Each element has a preview image that is tied to specified stream.
+ */
 function recommendedUpdate (data) {
   for (var i = 1; i < Object.keys(data.streams).length; i++) {
     // adds background url for medium sized image 320x{something}
@@ -240,15 +239,13 @@ function recommendedUpdate (data) {
   }
 }
 
-// Recommended update @TODO: Make this comment descriptive
-// On element click it will update the stream and chat with that stream
 /**
-* @name recClick
-* @description On specified recommeneded channel element click
-* pull the channel name and create a new player and chat iframe from specified channel.
-* Remove the element, then update the list of recommended channels by searching
-* the api for related channels to clicked channel.
-*/
+ * @name recClick
+ * @description On specified recommeneded channel element click
+ * pull the channel name and create a new player and chat iframe from specified channel.
+ * Remove the element, then update the list of recommended channels by searching
+ * the api for related channels to clicked channel.
+ */
 function recClick () {
   $('.v').click(function () {
     var channel = $(this).text().toLowerCase();
@@ -260,10 +257,21 @@ function recClick () {
 }
 
 /**
-* @name toggleChat
-* @param {function} toggleChat() - toggles chat visibility
-* @description toggle chat iframe on toggle chat 'button' click
-*/
+ * @name centerRec
+ * @description if there are 7 or less related channels
+ * then they are centered in the flexbox (this looks much nicer).
+ */
+function centerRec () {
+  if ($('#nav-objects').children().length < 8) {
+    $('#nav-objects').toggleClass('center');
+  }
+}
+
+/**
+ * @name toggleChat
+ * @param {function} toggleChat() - toggles chat visibility
+ * @description toggle chat iframe on toggle chat 'button' click
+ */
 $('#t-chat').click(function toggleChat () {
   $('#chat-iframe').toggle();
   $('.recommended').toggleClass('fixed');

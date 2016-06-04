@@ -31,6 +31,10 @@ body.push {
   padding-top: 0px;
 }
 
+.main a > svg {
+  border-radius: 5px;
+}
+
 .container h1 {
   text-align: center;
   margin-bottom: 30px;
@@ -284,6 +288,10 @@ body.push {
   flex-direction: row;
   text-align: center;
   overflow-x: auto;
+}
+
+#nav-objects.center {
+  justify-content: center;
 }
 
 #nav-objects a {
