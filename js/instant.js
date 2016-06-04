@@ -40,7 +40,7 @@ function newPlayer (query) {
 }
 
 /**
-* @name searchStreams (can't think of another name)
+* @name searchStreams
 * @param {string} query - search value for channel/vod
 * @description Searches the twitch api with a GET request based on the query.
 * If there is at least one stream it creates a new vod and chat iframe with the
@@ -65,17 +65,21 @@ function searchStreams (query) {
 
         // checks if there is at least 1 related channel
         // otherwise it does not update the recommended list
-        hasRelatedChannels(data);
+        hasRelatedChannels(data, query);
       } else {
         // no channels are live so look for vods in new ajax request
         // STILL WORK TO BE DONE HERE
-        searchVODs(vodURL);
+        // searchVODs(vodURL);
+
+        // if there is no stream remove all numbers in query and try a new search
+        searchStreams(query.replace(/[^a-zA-Z]+/g, ''));
+        console.log('No streams available, try searching again..');
       }
     }
   });
 }
 
-// ajax request for searching vods
+// ajax request for searching vods -- This function is currently under contruction
 // TODO: decide how to use vod system because other channels could be live maybe first 10? idk
 // 'https://api.twitch.tv/kraken/channels/' + channel could possible work initially, then once
 // channel is found pull VOD information
@@ -88,6 +92,28 @@ function searchVODs (channel) {
       if (data._total > 0) {
         console.log('SUCCESS!');
         console.table(data);
+      }
+    }
+  });
+}
+
+/**
+* @name updateRecommendedStreams
+* @param {string} query - search value for channel
+* @description This function updates the recommended channels based
+* on the query that is passed to it. This is nice if there are no related channels
+* for a specific channel then the recommended channels can be updated.
+* Another case when this function is called is when someone clicks on a recommended
+* channel and I need to update only the recommended channels and nothing else.
+*/
+function updateRecommendedStreams (query) {
+  $.ajax({
+    url: 'https://api.twitch.tv/kraken/search/streams?q=' + query,
+    method: 'GET',
+    data: {},
+    success: function (data) {
+      if (data._total > 0) {
+        recommendedUpdate(data);
       }
     }
   });
@@ -170,6 +196,36 @@ $('#t-rec').click(function () {
 });
 
 /**
+* @name hasRelatedChannels
+* @param {object} data - data object from twitch api call
+         {string} query - text searched by the user
+* @description checks if there is at least one related channel,
+* otherwise it does not update the recommended list.
+* This fixes the problem with the recommended nav not displaying any channels
+* However, if there is one channel it will attempt to update the related channels
+* with the same query but all of the numbers removed. (this is the regex: "/[^a-zA-Z]+/g")
+*/
+function hasRelatedChannels (data, query) {
+  // if there is at least 1 related channel (i.e 2 channels)
+  if (data._total > 1) {
+    // Removes old recommended elements once new query is searched
+    $('.v').remove();
+    recommendedUpdate(data);
+    recClick();
+  } else if (data._total === 1) {
+    newPlayer(query);
+    $('#chat-iframe').attr('src', 'https://www.twitch.tv/' + query + '/chat');
+    updateRecommendedStreams(query.replace(/[^a-zA-Z]+/g, ''));
+  }
+
+  // if there are 7 or less (8 if you include the first channel) related channels
+  // then they are centered in the flexbox (this looks much nicer).
+  if ($('#nav-objects').children().length <= 8) {
+    $('#nav-objects').css('justify-content', 'center');
+  }
+}
+
+/**
 * @name recommendedUpdate
 * @param {object} data - data parameter that takes the data pulled from the twitch api
 * @description This function updates the recommended navbar list with unique elements for each channel.
@@ -199,25 +255,8 @@ function recClick () {
     newPlayer($(this).text());
     $('#chat-iframe').attr('src', 'https://www.twitch.tv/' + channel + '/chat');
     $(this).remove();
-    searchStreams(channel);
+    updateRecommendedStreams(channel);
   });
-}
-
-/**
-* @name hasRelatedChannels
-* @param {object} data - data object from twitch api call
-* @description checks if there is at least one related channel,
-* otherwise it does not update the recommended list.
-* This fixes the problem with the recommended nav not displaying any channels
-*/
-function hasRelatedChannels (data) {
-  // if there is at least 1 related channel
-  if (data._total != 1 ) {
-    // Removes old recommended elements once new query is searched
-    $('.v').remove();
-    recommendedUpdate(data);
-    recClick();
-  }
 }
 
 /**

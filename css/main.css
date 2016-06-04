@@ -1,6 +1,8 @@
 /* TODO:
 * Change how related channels shows and hides itself and the button position.
 * Change push menu width at smaller resolutions?
+*
+* Fix transitions on show/hide related channels
 */
 
 body {
@@ -14,6 +16,13 @@ body.push {
   margin-right: -20%;
   overflow-x: hidden;
   transition: all .4s ease;
+}
+
+@media(max-width: 630px) {
+  body.push {
+    margin-left: 30%;
+    margin-right: -30%;
+  }
 }
 
 .main {
@@ -79,6 +88,49 @@ body.push {
   min-height: 100vh;
   width: 20%;
   transition: all .4s ease;
+}
+
+@media(max-width: 630px) {
+  .push-menu {
+    margin-left: -30%;
+    width: 30%;
+  }
+}
+
+.twitch-instant-title {
+  padding: 10px;
+  text-align: center;
+}
+
+.push-menu img {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+@media(max-width: 900px) {
+  .push-menu img {
+    width: 70%;
+  }
+}
+
+.push-menu h2 {
+  text-align: center;
+  color: #faf9fa;
+  display: inline-block;
+  font-size: 35px;
+  margin-bottom: 0;
+}
+
+@media(max-width: 1199px) {
+  .push-menu img {
+    width: 50%;
+    height: 30%;
+    margin-bottom: 0;
+  }
+
+  .push-menu h2 {
+    margin-top: 0;
+  }
 }
 
 .push-menu a {
@@ -189,6 +241,12 @@ body.push {
   width: 100%;
   position: fixed;
   bottom: 0;
+}
+
+@media (max-height: 925px) {
+  .recommended {
+    position: relative !important;
+  }
 }
 
 /* this fixes a spacing issue at lower resolutions when chat iframe is toggled off */
