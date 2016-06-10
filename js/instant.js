@@ -12,6 +12,11 @@
  * Have to find a way to search for the first channel that starts with a letter "a" since channel a
  * doesn't exist/have vods, and if that channel has vods then display all of it's vods. This will be
  * kind of tough to implement but I think I can get it done
+ *
+ * There is a bug where the recommended channels cannot be clicked sometimes, I think it might be
+ * in the function with the regex, not 100% sure but worth a look when I'm less tired
+ *
+ * Also change the updateRecommendedStreams or generateRelatedChannels functions they both sound too similar
  */
 
 // global variable timeout
@@ -54,14 +59,9 @@ function searchStreams (query) {
       if (data._total > 0) {
         var vodURL = data.streams[0]._links.videos; // pulls first channels video url
 
-        // update video iframe with first channel in search
+        // update video & chat iframe with first channel in search
         newPlayer(data.streams[0].channel.display_name);
-
-        // update chat iframe with first channel
         $('#chat-iframe').attr('src', data.streams[0].channel.url + '/chat');
-
-        // checks if there is at least 1 related channel
-        // otherwise it does not update the recommended list
         hasRelatedChannels(data, query);
       } else {
         // no channels are live so look for vods in new ajax request
@@ -110,8 +110,8 @@ function updateRecommendedStreams (query) {
     data: {},
     success: function (data) {
       if (data._total > 0) {
-        $('.v').remove(); // removes all current recom channels before updating
-        recommendedUpdate(data);
+        generateRelatedChannels(data);
+        centerRec();
       }
     }
   });
@@ -134,7 +134,6 @@ function featuredStreams () {
       newPlayer(data.featured[random].stream.channel.name);
       $('#chat-iframe').attr('src', data.featured[random].stream.channel.url + '/chat');
 
-      // recommended navbar shows other featured channels
       for (var i = 0; i < length; i++) {
         if (i != random) {
           $('#nav-objects').append('<a class="v v' + i + '"></a>');
@@ -142,9 +141,8 @@ function featuredStreams () {
           $('.v' + i).text(data.featured[i].stream.channel.display_name); // set hover text
         }
       }
-
-      centerRec();
       recClick();
+      centerRec();
     }
   });
 }
@@ -164,7 +162,6 @@ $('#search').keyup(function (e) {
   // this might not work all the time depending on when searchStreams ends, might need to change this placement
   $('.v').remove();
 
-  // replace with query if it does not work
   if (query === '' || query == undefined) {
     return;
   }
@@ -185,9 +182,6 @@ $('#search').keyup(function (e) {
   query.toLowerCase();
   clearTimeout(timeout);
 
-  // This will call the api only if the user stops typing for 500ms
-  // this makes the search function much prettier because it doesn't update
-  // immediately after typing.
   timeout = setTimeout(function () {
     searchStreams(query);
   }, 500);
@@ -212,7 +206,7 @@ function hasRelatedChannels (data, query) {
   if (data._total > 1) {
     // Removes old recommended elements once new query is searched
     $('.v').remove();
-    recommendedUpdate(data);
+    generateRelatedChannels(data);
     recClick();
   } else if (data._total === 1) {
     newPlayer(query);
@@ -225,23 +219,37 @@ function hasRelatedChannels (data, query) {
 }
 
 /**
- * @name recommendedUpdate
+ * @name generateRelatedChannels
  * @param {object} data - data parameter that takes the data pulled from the twitch api
  * @description This function updates the recommended navbar list with unique elements for each channel.
  * Each element has a preview image that is tied to specified stream.
  */
-function recommendedUpdate (data) {
+function generateRelatedChannels (data) {
   for (var i = 1; i < Object.keys(data.streams).length; i++) {
-    // adds background url for medium sized image 320x{something}
-    $('#nav-objects').append('<a class="v v' + i + '"></a>');
-    $('.v' + i).css('background', 'url(\'' + data.streams[i].preview.medium + '\')');
-    $('.v' + i).text(data.streams[i].channel.display_name); // set hover text
+    var channel = $('#stream-iframe').substring($('#stream-iframe').css('src').indexOf('='));
+    // checks for duplicates by comparing current stream in iframe to recommended streams
+    if (data.streams[i].channel.display_name.toLowerCase() != channel) {
+      $('#nav-objects').append('<a class="v v' + i + '"></a>');
+      // adds background url for medium sized image 320x{something}
+      $('.v' + i).css('background', 'url(\'' + data.streams[i].preview.medium + '\')');
+      $('.v' + i).text(data.streams[i].channel.display_name); // set hover text
+    }
+  }
+}
+
+function isDuplicate () {
+  for (var i = 0; i < Object.keys(data.streams).length; i++) {
+    for (var j = 0; j < Object.keys(data.streams).length; j++) {
+      if ($('v' + i).text() === $('v' + j).text()) {
+        $('.v' + j).remove();
+      }
+    }
   }
 }
 
 /**
  * @name recClick
- * @description On specified recommeneded channel element click
+ * @description On specified recommended channel element click
  * pull the channel name and create a new player and chat iframe from specified channel.
  * Remove the element, then update the list of recommended channels by searching
  * the api for related channels to clicked channel.
@@ -251,7 +259,6 @@ function recClick () {
     var channel = $(this).text().toLowerCase();
     newPlayer($(this).text());
     $('#chat-iframe').attr('src', 'https://www.twitch.tv/' + channel + '/chat');
-    $(this).remove();
     updateRecommendedStreams(channel);
   });
 }
