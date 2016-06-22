@@ -4,17 +4,6 @@
 * @file instant.js
 * @license MIT License - https://opensource.org/licenses/MIT
 * @version 1.0.0 ?
-*
-* @TODO:
-* Finish VOD function and logic, if it is even possible
-* Make popout menu prettier
-*
-* For vod search
-* probably just going to have to check boxes or something for vods or stream searches
-*
-* Have to find a way to search for the first channel that starts with a letter "a" since channel a
-* doesn't exist/have vods, and if that channel has vods then display all of it's vods. This will be
-* kind of tough to implement but I think I can get it done
 */
 
 // global variable timeout
