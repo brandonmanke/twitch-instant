@@ -40,6 +40,9 @@ function searchStreams (query) {
   $.ajax({
     url: 'https://api.twitch.tv/kraken/search/streams?q=' + query,
     method: 'GET',
+    headers: {
+      'Client-ID': 'ikhtst4j4m4b840pikcdc386wtxkxgz'
+    },
     data: {},
     success: function (data) {
       // checking if stream exists
@@ -76,6 +79,9 @@ function searchVODs (channel) {
   $.ajax({
     url: 'https://api.twitch.tv/kraken/channels/' + channel + '/videos?limit=10', // might remove the limit
     method: 'GET',
+    headers: {
+      'Client-ID': 'ikhtst4j4m4b840pikcdc386wtxkxgz'
+    },
     data: {},
     success: function (data) {
       if (data._total > 0) {
@@ -99,6 +105,9 @@ function updateRecommendedStreams (query) {
   $.ajax({
     url: 'https://api.twitch.tv/kraken/search/streams?q=' + query,
     method: 'GET',
+    headers: {
+      'Client-ID': 'ikhtst4j4m4b840pikcdc386wtxkxgz'
+    },
     data: {},
     success: function (data) {
       if (data._total > 0) {
@@ -117,6 +126,9 @@ function featuredStreams () {
   $.ajax({
     url: 'https://api.twitch.tv/kraken/streams/featured',
     method: 'GET',
+    headers: {
+      'Client-ID': 'ikhtst4j4m4b840pikcdc386wtxkxgz'
+    },
     data: {},
     success: function (data) {
       var length = Object.keys(data.featured).length;
