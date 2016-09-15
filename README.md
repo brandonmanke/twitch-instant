@@ -1,6 +1,13 @@
 # twitch-instant
 :egg: Instant search for twitch.tv
 
+## **Note**
+
+Because twitch's player is just now starting to shift completely away from flash, embedding any stream iframe will remove https from the site. Until they start serving their embedded content over SSL it will say this site is not secure, and you will have to manually enable the scripts in the address bar of your browser in order for the site to work.
+
+[More info](https://discuss.dev.twitch.tv/t/embedding-the-twitch-player-in-https-site/4216)
+Also most future updates will be most likely be random to non-existant.
+
 ## What is it?
 
 This is a instant search for [twitch.tv](https://www.twitch.tv/), a gaming/streaming website.
